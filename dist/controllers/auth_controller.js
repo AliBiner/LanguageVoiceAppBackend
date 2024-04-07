@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.me = exports.register = exports.login = void 0;
-const auth_service_1 = require("../services/auth.service");
+const auth_service_1 = require("../services/auth_service");
 const responses_1 = __importDefault(require("../utils/responses"));
 function login(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -35,4 +35,4 @@ function me(req, res) {
     });
 }
 exports.me = me;
-//# sourceMappingURL=auth.controller.js.map
+//# sourceMappingURL=auth_controller.js.map
