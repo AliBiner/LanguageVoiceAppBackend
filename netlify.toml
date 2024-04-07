@@ -1,7 +1,9 @@
 [build]
-function= "src/controllers"
+  command = "npm run build"  # TypeScript dosyalarını derlemek için build scripti
+  functions = "dist/controllers"  # Derlenmiş fonksiyon dosyalarının bulunduğu dizin
 
-[[redirect]]
-from="/api/me"
-to="/src/controllers/:splat"
-status=200
+[[redirects]]
+  from = "/api/*"  # API isteklerini yönlendirmek istediğiniz yolu belirtin
+  to = "/.netlify/functions/:splat"  # Fonksiyonların bulunduğu dizin
+  status = 200
+  force = true
