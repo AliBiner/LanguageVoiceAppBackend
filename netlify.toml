@@ -1,6 +1,6 @@
 [build]
   command = "npm run build"  # TypeScript dosyalarını derlemek için build scripti
-  functions = "dist/routers/auth.routers.js"  # Derlenmiş fonksiyon dosyalarının bulunduğu dizin
+  functions = "dist/routers"  # Derlenmiş fonksiyon dosyalarının bulunduğu dizin
 
 [[redirects]]
   from = "/api/*"  # API isteklerini yönlendirmek istediğiniz yolu belirtin
