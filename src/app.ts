@@ -9,8 +9,6 @@ import "./db/dbConnection";
 import errorHandlerMiddleware from "./middlewares/errorhandler";
 import cors from "cors";
 
-app.set("port", port);
-
 // Middleware
 app.use(express.json());
 app.use(express.json({ limit: "50mb" }));
@@ -19,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Router
-app.use("/.netlify/functions/api", routers);
+app.use("/api", routers);
 
 // Error Handler
 app.use(errorHandlerMiddleware);
