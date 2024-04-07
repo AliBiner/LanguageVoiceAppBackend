@@ -1,8 +1,6 @@
 import { Handler } from "serverless-http";
-import { me } from "../../src/controllers/auth_controller";
-import { HandlerContext, HandlerEvent } from "@netlify/functions";
 
-const meHandler: Handler = async (event, context) => {
+const meHandler: Handler = async () => {
   return {
     statusCode: 200,
     body: JSON.stringify({
