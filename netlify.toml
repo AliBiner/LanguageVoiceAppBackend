@@ -1,9 +1,3 @@
 [build]
   command = "npm run build"  # TypeScript dosyalarını derlemek için build scripti
-  functions = "dist/routers"  # Derlenmiş fonksiyon dosyalarının bulunduğu dizin
-
-[[redirects]]
-  from = "/api/me"  # API isteklerini yönlendirmek istediğiniz yolu belirtin
-  to = "/.netlify/functions/auth_router"  # Fonksiyonların bulunduğu dizin
-  status = 200
-  force = true
+  functions = "dist"  # Derlenmiş fonksiyon dosyalarının bulunduğu dizin

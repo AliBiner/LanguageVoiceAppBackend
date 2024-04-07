@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Router
-app.use("/api", routers);
+app.use("/.netlify/functions/api", routers);
 
 // Error Handler
 app.use(errorHandlerMiddleware);

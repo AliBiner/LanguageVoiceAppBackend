@@ -20,7 +20,7 @@ app.use(express_1.default.json({ limit: "50mb" }));
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cors_1.default)());
 // Router
-app.use("/api", index_1.default);
+app.use("/.netlify/functions/api", index_1.default);
 // Error Handler
 app.use(errorhandler_1.default);
 // start the Express server
