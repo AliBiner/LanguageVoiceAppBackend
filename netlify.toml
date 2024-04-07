@@ -3,7 +3,7 @@
   functions = "dist/routers"  # Derlenmiş fonksiyon dosyalarının bulunduğu dizin
 
 [[redirects]]
-  from = "/api/*"  # API isteklerini yönlendirmek istediğiniz yolu belirtin
-  to = "/.netlify/functions/:splat"  # Fonksiyonların bulunduğu dizin
+  from = "/api/me"  # API isteklerini yönlendirmek istediğiniz yolu belirtin
+  to = "/.netlify/functions/auth_router"  # Fonksiyonların bulunduğu dizin
   status = 200
   force = true
