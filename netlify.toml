@@ -1,0 +1,7 @@
+[build]
+function= "src/controllers"
+
+[[redirect]]
+from="/api/me"
+to="/src/controllers/:splat"
+status=200
