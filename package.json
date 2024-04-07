@@ -7,7 +7,7 @@
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "ts-node functions/me.ts",
+    "start": "nodemon start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
