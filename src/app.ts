@@ -28,3 +28,5 @@ app.use(errorHandlerMiddleware);
 app.listen(port, () => {
   console.log(`server started at http://192.168.1.126:${port}`);
 });
+
+export default app;
