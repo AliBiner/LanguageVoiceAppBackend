@@ -1,8 +1,8 @@
-import express,{Router} from "express";
-const expressRouter:Router = express.Router()
+import express, { Router } from "express";
+const expressRouter: Router = express.Router();
 
-import authRouter from "./auth.routers";
+import authRouter from "./auth_routers";
 
-expressRouter.use(authRouter)
+expressRouter.use(authRouter);
 
-export default expressRouter
+export default expressRouter;
