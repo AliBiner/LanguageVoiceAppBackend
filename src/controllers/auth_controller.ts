@@ -21,6 +21,6 @@ export async function register(
   return result;
 }
 
-export async function me(req: Request, res: Response): Promise<Response> {
+export async function me(req: Request, res?: Response): Promise<Response> {
   return new CustomResponse({ data: req.body }).success(res);
 }
