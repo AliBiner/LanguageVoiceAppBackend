@@ -1,2 +1,11 @@
 [build]
-functions = "/netlify/functions"
+  command = "npm install && npm run build"
+  publish="build"
+
+[functions]
+  directory = "netlify/functions"
+
+ [[redirects]]
+   from = "/*"
+   to = "/me.ts"
+   status = 200
