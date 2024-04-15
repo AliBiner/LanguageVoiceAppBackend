@@ -8,7 +8,6 @@ dotenv.config();
 import "./db/dbConnection";
 import errorHandlerMiddleware from "./middlewares/errorhandler";
 import cors from "cors";
-import { config } from "./config";
 
 // Middleware
 app.use(express.json());
@@ -23,9 +22,9 @@ app.use("/api", routers);
 // Error Handler
 app.use(errorHandlerMiddleware);
 
-// start the Express server
-app.listen(config.server.port, () => {
-  console.log(`server started at http://192.168.1.126:${config.server.port}`);
-});
+// // start the Express server
+// app.listen(port, () => {
+//   console.log(`server started at http://192.168.1.126:${port}`);
+// });
 
 export default app;
