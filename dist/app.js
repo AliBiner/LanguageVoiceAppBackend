@@ -22,9 +22,9 @@ app.use((0, cors_1.default)());
 app.use("/api", index_1.default);
 // Error Handler
 app.use(errorhandler_1.default);
-// // start the Express server
-// app.listen(port, () => {
-//   console.log(`server started at http://192.168.1.126:${port}`);
-// });
+// start the Express server
+app.listen(port, () => {
+    console.log(`server started at http://192.168.1.126:${port}`);
+});
 exports.default = app;
 //# sourceMappingURL=app.js.map

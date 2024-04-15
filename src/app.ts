@@ -22,9 +22,9 @@ app.use("/api", routers);
 // Error Handler
 app.use(errorHandlerMiddleware);
 
-// // start the Express server
-// app.listen(port, () => {
-//   console.log(`server started at http://192.168.1.126:${port}`);
-// });
+// start the Express server
+app.listen(port, () => {
+  console.log(`server started at http://192.168.1.126:${port}`);
+});
 
 export default app;
