@@ -33,6 +33,7 @@ export async function tokenCheck(
     req.headers.authorization.startsWith("Bearer ");
 
   if (!headerToken) {
+    console.log("please test");
     return new CustomResponse({ message: "Please enter a token" }).error_401(
       res
     );
