@@ -1,13 +1,14 @@
 import "express-async-errors";
 import express from "express";
 const app = express();
-const port = 8080; // default port to listen
+const port = process.env.PORT || 8080; // default port to listen
 import routers from "./routers/index";
 import dotenv from "dotenv";
 dotenv.config();
 import "./db/dbConnection";
 import errorHandlerMiddleware from "./middlewares/errorhandler";
 import cors from "cors";
+import { config } from "./config";
 
 // Middleware
 app.use(express.json());
@@ -23,8 +24,8 @@ app.use("/api", routers);
 app.use(errorHandlerMiddleware);
 
 // start the Express server
-app.listen(port, () => {
-  console.log(`server started at http://192.168.1.126:${port}`);
+app.listen(config.server.port, () => {
+  console.log(`server started at http://192.168.1.126:${config.server.port}`);
 });
 
 export default app;
