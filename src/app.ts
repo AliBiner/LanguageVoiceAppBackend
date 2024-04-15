@@ -8,7 +8,6 @@ dotenv.config();
 import "./db/dbConnection";
 import errorHandlerMiddleware from "./middlewares/errorhandler";
 import cors from "cors";
-import serverless from "serverless-http";
 
 // Middleware
 app.use(express.json());
@@ -29,4 +28,3 @@ app.listen(port, () => {
 });
 
 export default app;
-export const handler = serverless(app);

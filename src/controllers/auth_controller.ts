@@ -4,6 +4,7 @@ import {
   authServiceRegister,
 } from "../services/auth_service";
 import CustomResponse from "../utils/responses";
+import { HandlerResponse } from "@netlify/functions";
 
 export async function login(
   request: Request,
@@ -21,6 +22,10 @@ export async function register(
   return result;
 }
 
-export async function me(req: Request, res?: Response): Promise<Response> {
-  return new CustomResponse({ data: req.body }).success(res);
+export async function me() {
+  const result: HandlerResponse = {
+    statusCode: 200,
+    body: JSON.stringify({ msg: "test" }),
+  };
+  return result;
 }

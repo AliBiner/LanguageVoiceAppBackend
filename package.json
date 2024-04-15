@@ -8,12 +8,15 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "nodemon start",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lambda-serve": "netlify-lambda serve netlify/functions/",
+    "lambda-build": "netlify-lambda build netlify/functions/"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@netlify/functions": "^2.6.0",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
