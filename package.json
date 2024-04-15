@@ -7,7 +7,7 @@
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "node dist/app.js",
+    "start": "nodemon dist/app.js",
     "postinstall": "tsc",
     "dev": "tsc && node dist/app.js"
   },
