@@ -39,6 +39,7 @@ function tokenCheck(req, res, next) {
         const headerToken = req.headers.authorization &&
             req.headers.authorization.startsWith("Bearer ");
         if (!headerToken) {
+            console.log("please test");
             return new responses_1.default({ message: "Please enter a token" }).error_401(res);
         }
         const token = req.headers.authorization.split(" ")[1];
