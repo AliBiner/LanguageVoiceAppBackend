@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
 
-mongoose.connect(process.env.DB_URL,{}).then(()=>{
+mongoose
+  .connect(process.env.DB_URL, {})
+  .then(() => {
     // tslint:disable-next-line:no-console
-    console.log( "Database Connection Success" );
-
-}).catch((err:Error)=>{
+    console.log("Database Connection Success");
+  })
+  .catch((err: Error) => {
     // tslint:disable-next-line:no-console
-    console.log( "Database Connection Failed",err );
-})
+    console.log("Database Connection Failed", err);
+  });
 
-export default mongoose
+export default mongoose;
