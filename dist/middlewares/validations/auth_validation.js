@@ -71,7 +71,6 @@ AuthValidation.login = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
     next();
 });
 AuthValidation.register = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("validation start: " + new Date().getMilliseconds);
     try {
         yield joi
             .object({

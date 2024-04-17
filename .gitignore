@@ -3,8 +3,8 @@
 
 .env*
 .flaskenv*
-.env.project
-.env.vault
+!.env.project
+!.env.vault
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,dotenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,dotenv
