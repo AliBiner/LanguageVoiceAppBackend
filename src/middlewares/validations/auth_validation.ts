@@ -31,6 +31,7 @@ class AuthValidation {
   };
 
   static register = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("validation start: " + new Date().getMilliseconds);
     try {
       await joi
         .object({
