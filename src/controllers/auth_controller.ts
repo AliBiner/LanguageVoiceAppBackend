@@ -5,6 +5,8 @@ import {
 } from "../services/auth_service";
 import CustomResponse from "../utils/responses";
 import { HandlerResponse } from "@netlify/functions";
+import client from "../db/postgreSqlConnection";
+import { error } from "console";
 
 export async function login(
   request: Request,
@@ -22,10 +24,12 @@ export async function register(
   return result;
 }
 
-export async function me() {
-  const result: HandlerResponse = {
-    statusCode: 200,
-    body: JSON.stringify({ msg: "test" }),
-  };
-  return result;
+export async function me(request: Request, response: Response) {
+  try {
+    const result = await client.query("select * from users");
+    console.log(result.rows);
+    return new CustomResponse({ data: result.rows }).success(response);
+  } catch (err) {
+    return new CustomResponse({ message: err }).error_500(response);
+  }
 }

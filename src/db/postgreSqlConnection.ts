@@ -1,5 +1,6 @@
 import { Client } from "pg";
-
+import dotenv from "dotenv";
+dotenv.config();
 const client = new Client({
   user: process.env.POSTGRESQL_USER,
   password: process.env.POSTGRESQL_PASSWORD,
@@ -8,13 +9,13 @@ const client = new Client({
   database: process.env.POSTGRESQL_DATABASE,
 });
 
-client
-  .connect()
-  .then(() => {
-    console.log("Connected to PostgreSQL database");
-  })
-  .catch((err) => {
-    console.error("Error connecting to PostgreSQL database", err);
-  });
+export async function connect() {
+  try {
+    await client.connect();
+    console.log("Connected Postgresql Database");
+  } catch (error) {
+    console.log("Error Postgresql: ", error);
+  }
+}
 
 export default client;

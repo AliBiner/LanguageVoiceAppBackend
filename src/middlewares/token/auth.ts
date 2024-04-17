@@ -2,15 +2,15 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import CustomResponse from "../..//utils/responses";
 import User from "../../models/user_model";
+import { UserModel } from "../../models/user_postgre";
 
 export async function createToken(
-  userId: string,
-  userObject: User,
+  userObject: UserModel,
   res: Response
 ): Promise<Response> {
   const payload = {
-    sub: userId,
-    name: userObject.name,
+    sub: userObject.id,
+    name: userObject.firstName,
   };
   const token = await jwt.sign(payload, process.env.JWT_SECRET_KEY, {
     algorithm: "HS512",

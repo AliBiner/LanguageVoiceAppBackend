@@ -8,7 +8,8 @@ dotenv.config();
 import "./db/dbConnection";
 import errorHandlerMiddleware from "./middlewares/errorhandler";
 import cors from "cors";
-
+import { connect } from "./db/postgreSqlConnection";
+connect();
 // Middleware
 app.use(express.json());
 app.use(express.json({ limit: "50mb" }));
