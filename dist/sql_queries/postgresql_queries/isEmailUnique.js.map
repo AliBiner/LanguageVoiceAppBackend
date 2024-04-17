@@ -1,1 +1,0 @@
-{"version":3,"file":"isEmailUnique.js","sourceRoot":"","sources":["../../../src/sql_queries/postgresql_queries/isEmailUnique.ts"],"names":[],"mappings":";;;;;AAAA,6EAAqE;AAErE,SAAS,aAAa;IACpB,MAAM,KAAK,GACT,SAAS;QACT,sBAA4B,CAAC,EAAE;QAC/B,QAAQ;QACR,sBAA4B,CAAC,SAAS;QACtC,SAAS;QACT,sBAA4B,CAAC,KAAK;QAClC,KAAK,CAAC;IACR,OAAO,KAAK,CAAC;AACf,CAAC;AAED,kBAAe,aAAa,CAAC"}
