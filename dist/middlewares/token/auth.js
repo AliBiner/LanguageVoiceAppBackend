@@ -16,11 +16,11 @@ exports.tokenCheck = exports.createToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const responses_1 = __importDefault(require("../..//utils/responses"));
 const user_model_1 = __importDefault(require("../../models/user_model"));
-function createToken(userId, userObject, res) {
+function createToken(userObject, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const payload = {
-            sub: userId,
-            name: userObject.name,
+            sub: userObject.id,
+            name: userObject.firstName,
         };
         const token = yield jsonwebtoken_1.default.sign(payload, process.env.JWT_SECRET_KEY, {
             algorithm: "HS512",

@@ -14,51 +14,64 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.authServiceRegister = exports.authServiceLogin = void 0;
 const responses_1 = __importDefault(require("../utils/responses"));
-const user_model_1 = __importDefault(require("../models/user_model"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const check_1 = require("./checks/check");
 const auth_1 = require("../middlewares/token/auth");
+const postgreSqlConnection_1 = __importDefault(require("../db/postgreSqlConnection"));
+const isEmailUnique_1 = __importDefault(require("../sql_queries/postgresql_queries/isEmailUnique"));
+const user_postgre_1 = __importDefault(require("../models/user_postgre"));
+const authMapper_1 = require("../mappers/authMapper");
+const auth_repository_1 = require("../repositories/user_repository/auth_repository");
+const selectQuery_1 = __importDefault(require("../sql_queries/postgresql_queries/selectQuery"));
 function authServiceLogin(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         const { email, password } = request.body;
-        const userCheck = yield user_model_1.default.findOne({ email });
-        if (userCheck == null) {
+        const query = (0, selectQuery_1.default)({
+            tableName: "users",
+            selectedColumn: ["email"],
+            conditions: [user_postgre_1.default.email],
+        });
+        const values = [email];
+        const checkEmail = yield (0, auth_repository_1.loginUser)(query, values, password);
+        if (checkEmail === false) {
             return new responses_1.default({
-                message: "Email or Password Incorrect",
-            }).error_400(response);
-        }
-        const comparePass = yield bcrypt_1.default.compare(password, userCheck.password);
-        if (comparePass === false) {
-            return new responses_1.default({
-                message: "Email or Password Incorrect",
+                message: "Email or password not equals",
             }).error_400(response);
         }
         else {
-            yield (0, auth_1.createToken)(userCheck.id, userCheck, response);
+            const userModel = yield (0, authMapper_1.loginQueryToUserModel)(checkEmail);
+            yield (0, auth_1.createToken)(userModel, response);
         }
     });
 }
 exports.authServiceLogin = authServiceLogin;
 function authServiceRegister(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { email, password } = req.body;
-        if ((yield (0, check_1.checkValueAtDb)({ email }, user_model_1.default)) === false) {
-            return new responses_1.default({
-                data: email,
-                message: "Email is already correct",
-            }).error_400(res);
+        try {
+            const { email } = req.body;
+            const emailQuery = (0, isEmailUnique_1.default)();
+            const emailControl = yield postgreSqlConnection_1.default.query(emailQuery, [email]);
+            if (emailControl.rowCount >= 1) {
+                return new responses_1.default({
+                    data: email,
+                    message: "Email is already correct",
+                }).error_400(res);
+            }
+            else {
+                const userModel = yield (0, authMapper_1.registerRequestToUserModel)(req);
+                const result = yield (0, auth_repository_1.createUser)(userModel);
+                if (result !== false) {
+                    return new responses_1.default({
+                        message: "Created Account",
+                    }).created(res);
+                }
+                else {
+                    return new responses_1.default({ message: "Not Created Account" }).error_400(res);
+                }
+            }
         }
-        const cryptPass = yield bcrypt_1.default.hash(password, 10);
-        req.body.password = cryptPass;
-        const userToRegister = new user_model_1.default(req.body);
-        yield userToRegister
-            .save()
-            .then((data) => {
-            return new responses_1.default({ data, message: "Saved User" }).created(res);
-        })
-            .catch((error) => {
-            return new responses_1.default({ message: error.message }).error_400(res);
-        });
+        catch (error) {
+            console.log(error);
+            return new responses_1.default({ message: "Account Creating Error" }).error_400(res);
+        }
     });
 }
 exports.authServiceRegister = authServiceRegister;

@@ -13,6 +13,8 @@ dotenv_1.default.config();
 require("./db/dbConnection");
 const errorhandler_1 = __importDefault(require("./middlewares/errorhandler"));
 const cors_1 = __importDefault(require("cors"));
+const postgreSqlConnection_1 = require("./db/postgreSqlConnection");
+(0, postgreSqlConnection_1.connect)();
 // Middleware
 app.use(express_1.default.json());
 app.use(express_1.default.json({ limit: "50mb" }));
