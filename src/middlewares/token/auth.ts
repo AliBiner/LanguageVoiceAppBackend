@@ -3,6 +3,8 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import CustomResponse from "../..//utils/responses";
 import User from "../../models/user_model";
 import { UserModel } from "../../models/user_postgre";
+import client from "../../db/postgreSqlConnection";
+import { deprecate } from "util";
 
 export async function createToken(
   userObject: UserModel,
@@ -16,6 +18,7 @@ export async function createToken(
     algorithm: "HS512",
     expiresIn: process.env.JWT_EXPIRES_IN,
   });
+
   return res.status(201).json({
     success: true,
     token,
@@ -31,7 +34,6 @@ export async function tokenCheck(
   const headerToken =
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer ");
-
   if (!headerToken) {
     console.log("please test");
     return new CustomResponse({ message: "Please enter a token" }).error_401(
@@ -48,7 +50,13 @@ export async function tokenCheck(
         return new CustomResponse({ message: "Undefined Token" }).error_401(
           res
         );
-      const userInfo = await User.findById(decoded.sub);
+      console.log("subs" + decoded.sub);
+      const id = `'${decoded.sub}'`;
+      const userInfo = await client.query(
+        "select * from users where user_id=$1",
+        [id]
+      );
+      // console.log("model:", userInfo.rows);
       if (!userInfo) {
         return new CustomResponse({ message: "Not found User" }).error_401(res);
       }

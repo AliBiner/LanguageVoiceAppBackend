@@ -1,7 +1,7 @@
 import "express-async-errors";
 import express from "express";
 const app = express();
-const port = process.env.PORT || 8080; // default port to listen
+const port = process.env.PORT || 8080 || 8081; // default port to listen
 import routers from "./routers/index";
 import dotenv from "dotenv";
 dotenv.config();

@@ -61,6 +61,30 @@ class AuthValidation {
     }
     next();
   };
+  static email_exist = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      await joi
+        .object({
+          email: joi.string().email().trim().min(3).max(100).required(),
+        })
+        .validateAsync(req.body);
+    } catch (error) {
+      if (error.details && error.details[0].message) {
+        return new CustomResponse({
+          message: error.details[0].message,
+        }).error_400(res);
+      } else {
+        return new CustomResponse({
+          message: "Please enter a valid model json",
+        }).error_400(res);
+      }
+    }
+    next();
+  };
 }
 
 export default AuthValidation;

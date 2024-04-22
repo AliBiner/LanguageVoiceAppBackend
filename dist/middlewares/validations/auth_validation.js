@@ -103,5 +103,27 @@ AuthValidation.register = (req, res, next) => __awaiter(void 0, void 0, void 0, 
     }
     next();
 });
+AuthValidation.email_exist = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield joi
+            .object({
+            email: joi.string().email().trim().min(3).max(100).required(),
+        })
+            .validateAsync(req.body);
+    }
+    catch (error) {
+        if (error.details && error.details[0].message) {
+            return new responses_1.default({
+                message: error.details[0].message,
+            }).error_400(res);
+        }
+        else {
+            return new responses_1.default({
+                message: "Please enter a valid model json",
+            }).error_400(res);
+        }
+    }
+    next();
+});
 exports.default = AuthValidation;
 //# sourceMappingURL=auth_validation.js.map

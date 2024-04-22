@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -12,15 +35,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authServiceRegister = exports.authServiceLogin = void 0;
+exports.emailExistService = exports.authServiceRegister = exports.authServiceLogin = void 0;
 const responses_1 = __importDefault(require("../utils/responses"));
 const auth_1 = require("../middlewares/token/auth");
-const postgreSqlConnection_1 = __importDefault(require("../db/postgreSqlConnection"));
-const isEmailUnique_1 = __importDefault(require("../sql_queries/postgresql_queries/isEmailUnique"));
 const user_postgre_1 = __importDefault(require("../models/user_postgre"));
 const authMapper_1 = require("../mappers/authMapper");
 const auth_repository_1 = require("../repositories/user_repository/auth_repository");
 const selectQuery_1 = __importDefault(require("../sql_queries/postgresql_queries/selectQuery"));
+const bcrypt = __importStar(require("bcrypt"));
 function authServiceLogin(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         const { email, password } = request.body;
@@ -46,27 +68,30 @@ exports.authServiceLogin = authServiceLogin;
 function authServiceRegister(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { email } = req.body;
-            const emailQuery = (0, isEmailUnique_1.default)();
-            const emailControl = yield postgreSqlConnection_1.default.query(emailQuery, [email]);
-            if (emailControl.rowCount >= 1) {
+            const { password } = req.body;
+            // const emailQuery = isEmailUnique();
+            // const insertWithEx = insertWithExist("users");
+            // const emailControl = await client.query(await emailQuery, [email]);
+            // if ((await emailControl.rowCount) >= 1) {
+            //   return new CustomResponse({
+            //     data: email,
+            //     message: "Email is already correct",
+            //   }).error_400(res);
+            // } else {
+            const cryptPass = bcrypt.hashSync(password, 1);
+            const userModel = yield (0, authMapper_1.registerRequestToUserModel)(req);
+            userModel.password = cryptPass;
+            const result = yield (0, auth_repository_1.createUser)(userModel);
+            if (result !== 0) {
+                console.log(result);
                 return new responses_1.default({
-                    data: email,
-                    message: "Email is already correct",
-                }).error_400(res);
+                    message: "Created Account",
+                }).created(res);
             }
             else {
-                const userModel = yield (0, authMapper_1.registerRequestToUserModel)(req);
-                const result = yield (0, auth_repository_1.createUser)(userModel);
-                if (result !== false) {
-                    return new responses_1.default({
-                        message: "Created Account",
-                    }).created(res);
-                }
-                else {
-                    return new responses_1.default({ message: "Not Created Account" }).error_400(res);
-                }
+                return new responses_1.default({ message: "Not Created Account" }).error_400(res);
             }
+            // }
         }
         catch (error) {
             console.log(error);
@@ -75,4 +100,17 @@ function authServiceRegister(req, res) {
     });
 }
 exports.authServiceRegister = authServiceRegister;
+function emailExistService(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { email } = req.body;
+        const result = yield (0, auth_repository_1.emailExistsRepository)(email);
+        if (result === true) {
+            return new responses_1.default({ message: "Email Already Exists" }).error_400(res);
+        }
+        else {
+            return new responses_1.default({ message: "Email not used" }).success(res);
+        }
+    });
+}
+exports.emailExistService = emailExistService;
 //# sourceMappingURL=auth_service.js.map

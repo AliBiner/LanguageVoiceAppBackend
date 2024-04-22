@@ -12,10 +12,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.me = exports.register = exports.login = void 0;
+exports.emailExistController = exports.me = exports.register = exports.login = void 0;
 const auth_service_1 = require("../services/auth_service");
 const responses_1 = __importDefault(require("../utils/responses"));
-const postgreSqlConnection_1 = __importDefault(require("../db/postgreSqlConnection"));
 function login(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         const result = (0, auth_service_1.authServiceLogin)(request, response);
@@ -33,9 +32,7 @@ exports.register = register;
 function me(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield postgreSqlConnection_1.default.query("select * from users");
-            console.log(result.rows);
-            return new responses_1.default({ data: result.rows }).success(response);
+            return new responses_1.default({}).success(response);
         }
         catch (err) {
             return new responses_1.default({ message: err }).error_500(response);
@@ -43,4 +40,11 @@ function me(request, response) {
     });
 }
 exports.me = me;
+function emailExistController(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield (0, auth_service_1.emailExistService)(req, res);
+        return result;
+    });
+}
+exports.emailExistController = emailExistController;
 //# sourceMappingURL=auth_controller.js.map

@@ -1,6 +1,6 @@
 import userModelDatabaseColumnNames from "../../models/user_postgre";
 
-function isEmailUnique() {
+async function isEmailUnique() {
   const query =
     "select " +
     userModelDatabaseColumnNames.id +

@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.tokenCheck = exports.createToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const responses_1 = __importDefault(require("../..//utils/responses"));
-const user_model_1 = __importDefault(require("../../models/user_model"));
+const postgreSqlConnection_1 = __importDefault(require("../../db/postgreSqlConnection"));
 function createToken(userObject, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const payload = {
@@ -46,7 +46,10 @@ function tokenCheck(req, res, next) {
         yield jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => __awaiter(this, void 0, void 0, function* () {
             if (err)
                 return new responses_1.default({ message: "Undefined Token" }).error_401(res);
-            const userInfo = yield user_model_1.default.findById(decoded.sub);
+            console.log("subs" + decoded.sub);
+            const id = `'${decoded.sub}'`;
+            const userInfo = yield postgreSqlConnection_1.default.query("select * from users where user_id=$1", [id]);
+            // console.log("model:", userInfo.rows);
             if (!userInfo) {
                 return new responses_1.default({ message: "Not found User" }).error_401(res);
             }

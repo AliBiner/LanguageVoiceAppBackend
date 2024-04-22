@@ -8,24 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginQueryToUserModel = exports.registerRequestToUserModel = void 0;
 const uuid_1 = require("uuid");
-const bcrypt_1 = __importDefault(require("bcrypt"));
 function registerRequestToUserModel(request) {
     return __awaiter(this, void 0, void 0, function* () {
         const { firstName, middleName, lastName, email, password } = request.body;
-        const cryptPass = yield bcrypt_1.default.hash(password, 10);
         const model = {
             id: (0, uuid_1.v4)(),
             firstName: firstName,
             middleName: middleName,
             lastName: lastName,
             email: email,
-            password: cryptPass,
+            password: null,
             createdDate: new Date(Date.now()).toISOString(),
         };
         return model;

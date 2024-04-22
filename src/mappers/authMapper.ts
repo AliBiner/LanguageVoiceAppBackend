@@ -1,14 +1,12 @@
 import { Request } from "express";
 import { UserModel } from "../models/user_postgre";
 import { v4 as uuid4 } from "uuid";
-import bcrypt from "bcrypt";
 import { QueryResultRow } from "pg";
 
 export async function registerRequestToUserModel(
   request: Request
 ): Promise<UserModel> {
   const { firstName, middleName, lastName, email, password } = request.body;
-  const cryptPass = await bcrypt.hash(password, 10);
 
   const model: UserModel = {
     id: uuid4(),
@@ -16,7 +14,7 @@ export async function registerRequestToUserModel(
     middleName: middleName,
     lastName: lastName,
     email: email,
-    password: cryptPass,
+    password: null,
     createdDate: new Date(Date.now()).toISOString(),
   };
 

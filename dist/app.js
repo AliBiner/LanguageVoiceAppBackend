@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 require("express-async-errors");
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
-const port = process.env.PORT || 8080; // default port to listen
+const port = process.env.PORT || 8080 || 8081; // default port to listen
 const index_1 = __importDefault(require("./routers/index"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
