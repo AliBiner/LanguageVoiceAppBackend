@@ -39,17 +39,14 @@ function tokenCheck(req, res, next) {
         const headerToken = req.headers.authorization &&
             req.headers.authorization.startsWith("Bearer ");
         if (!headerToken) {
-            console.log("please test");
             return new responses_1.default({ message: "Please enter a token" }).error_401(res);
         }
         const token = req.headers.authorization.split(" ")[1];
         yield jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => __awaiter(this, void 0, void 0, function* () {
             if (err)
                 return new responses_1.default({ message: "Undefined Token" }).error_401(res);
-            console.log("subs" + decoded.sub);
             const id = `'${decoded.sub}'`;
             const userInfo = yield postgreSqlConnection_1.default.query("select * from users where user_id=$1", [id]);
-            // console.log("model:", userInfo.rows);
             if (!userInfo) {
                 return new responses_1.default({ message: "Not found User" }).error_401(res);
             }

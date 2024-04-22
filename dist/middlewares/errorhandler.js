@@ -6,19 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const errors_1 = __importDefault(require("../utils/errors"));
 const errorHandlerMiddleware = (err, req, res, next) => {
     if (err instanceof errors_1.default) {
-        // tslint:disable-next-line:no-console
-        console.log(err);
         return res.status(400).json({
             success: false,
-            message: err.message
+            message: err.message,
         });
     }
     else {
-        // tslint:disable-next-line:no-console
-        console.log(err);
         return res.status(500).json({
             success: false,
-            message: err.message
+            message: err.message,
         });
     }
 };

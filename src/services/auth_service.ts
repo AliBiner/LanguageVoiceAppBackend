@@ -70,7 +70,6 @@ export async function authServiceRegister(
 
     const result: number = await createUser(userModel);
     if (result !== 0) {
-      console.log(result);
       return new CustomResponse({
         message: "Created Account",
       }).created(res);
@@ -81,7 +80,6 @@ export async function authServiceRegister(
     }
     // }
   } catch (error) {
-    console.log(error);
     return new CustomResponse({ message: "Account Creating Error" }).error_400(
       res
     );

@@ -29,9 +29,7 @@ function connect() {
             yield client.connect();
             console.log("Connected Postgresql Database");
         }
-        catch (error) {
-            console.log("Error Postgresql: ", error);
-        }
+        catch (error) { }
     });
 }
 exports.connect = connect;

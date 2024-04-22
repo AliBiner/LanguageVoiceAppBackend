@@ -35,7 +35,6 @@ export async function tokenCheck(
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer ");
   if (!headerToken) {
-    console.log("please test");
     return new CustomResponse({ message: "Please enter a token" }).error_401(
       res
     );
@@ -50,13 +49,13 @@ export async function tokenCheck(
         return new CustomResponse({ message: "Undefined Token" }).error_401(
           res
         );
-      console.log("subs" + decoded.sub);
+
       const id = `'${decoded.sub}'`;
       const userInfo = await client.query(
         "select * from users where user_id=$1",
         [id]
       );
-      // console.log("model:", userInfo.rows);
+
       if (!userInfo) {
         return new CustomResponse({ message: "Not found User" }).error_401(res);
       }

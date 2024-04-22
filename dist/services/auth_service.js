@@ -83,7 +83,6 @@ function authServiceRegister(req, res) {
             userModel.password = cryptPass;
             const result = yield (0, auth_repository_1.createUser)(userModel);
             if (result !== 0) {
-                console.log(result);
                 return new responses_1.default({
                     message: "Created Account",
                 }).created(res);
@@ -94,7 +93,6 @@ function authServiceRegister(req, res) {
             // }
         }
         catch (error) {
-            console.log(error);
             return new responses_1.default({ message: "Account Creating Error" }).error_400(res);
         }
     });

@@ -26,7 +26,7 @@ app.use("/api", index_1.default);
 app.use(errorhandler_1.default);
 // start the Express server
 app.listen(port, () => {
-    console.log(`server started at http://192.168.1.126:${port}`);
+    console.log(`Server Started`);
 });
 exports.default = app;
 //# sourceMappingURL=app.js.map

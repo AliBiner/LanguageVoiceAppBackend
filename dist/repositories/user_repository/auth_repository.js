@@ -62,7 +62,6 @@ exports.loginUser = loginUser;
 function emailExistsRepository(email) {
     return __awaiter(this, void 0, void 0, function* () {
         const result = yield postgreSqlConnection_1.default.query("select exists ( select 1 from users where email='" + email + "') limit 1");
-        console.log(result.rows[0].exists);
         return result.rows[0].exists;
     });
 }

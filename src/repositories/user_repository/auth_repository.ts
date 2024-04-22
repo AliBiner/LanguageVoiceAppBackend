@@ -55,6 +55,6 @@ export async function emailExistsRepository(email: string) {
   const result = await client.query(
     "select exists ( select 1 from users where email='" + email + "') limit 1"
   );
-  console.log(result.rows[0].exists);
+
   return result.rows[0].exists;
 }
