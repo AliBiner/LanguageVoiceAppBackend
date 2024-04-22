@@ -51,10 +51,9 @@ export async function loginUser(
   }
 }
 
-export async function emailExistsRepository(email: string) {
+export async function emailExistsRepository(email: string): Promise<number> {
   const result = await client.query(
-    "select exists ( select 1 from users where email='" + email + "') limit 1"
+    "select user_id from users where email='" + email + "' limit 1"
   );
-
-  return result.rows[0].exists;
+  return result.rowCount;
 }

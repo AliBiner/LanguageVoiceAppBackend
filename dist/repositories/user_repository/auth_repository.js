@@ -61,8 +61,8 @@ function loginUser(query, values, password) {
 exports.loginUser = loginUser;
 function emailExistsRepository(email) {
     return __awaiter(this, void 0, void 0, function* () {
-        const result = yield postgreSqlConnection_1.default.query("select exists ( select 1 from users where email='" + email + "') limit 1");
-        return result.rows[0].exists;
+        const result = yield postgreSqlConnection_1.default.query("select user_id from users where email='" + email + "' limit 1");
+        return result.rowCount;
     });
 }
 exports.emailExistsRepository = emailExistsRepository;

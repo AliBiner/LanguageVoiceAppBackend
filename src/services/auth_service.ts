@@ -91,8 +91,8 @@ export async function emailExistService(
   res: Response
 ): Promise<Response> {
   const { email } = req.body;
-  const result = await emailExistsRepository(email);
-  if (result === true) {
+  const result: number = await emailExistsRepository(email);
+  if (result === 1) {
     return new CustomResponse({ message: "Email Already Exists" }).error_400(
       res
     );

@@ -102,7 +102,7 @@ function emailExistService(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { email } = req.body;
         const result = yield (0, auth_repository_1.emailExistsRepository)(email);
-        if (result === true) {
+        if (result === 1) {
             return new responses_1.default({ message: "Email Already Exists" }).error_400(res);
         }
         else {
