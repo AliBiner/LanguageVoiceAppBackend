@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "start": "nodemon src/app.ts",
+    "start": "npm run copy && nodemon src/app.ts",
+    "copy": "mkdir -p dist/threads && cp src/threads/* dist/threads/",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",

@@ -43,7 +43,7 @@ export async function me(request: Request, response: Response) {
 function createWorker() {
   return new Promise<string>((resolve, reject) => {
     const worker = new Worker(
-      "../../../../../../home/ali/Desktop/TsProject/src/controllers/meWorker.js"
+      "../../../../../../../home/ali/Desktop/TsProject/src/threads/meWorker.js"
     );
 
     worker.postMessage("Hello, World!!");
