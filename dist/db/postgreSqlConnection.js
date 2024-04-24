@@ -16,12 +16,20 @@ exports.connect = void 0;
 const pg_1 = require("pg");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
+const user = process.env.POSTGRESQL_USER;
+const password = process.env.POSTGRESQL_PASSWORD;
+const host = process.env.POSTGRESQL_HOSTNAME;
+const port = Number(process.env.POSTGRESQL_PORT);
+const database = process.env.POSTGRESQL_DATABASE;
+if (!user || !password || !host || !port || !database) {
+    throw new Error("API_KEY or API_SECRET missing from .env file");
+}
 const client = new pg_1.Client({
-    user: process.env.POSTGRESQL_USER,
-    password: process.env.POSTGRESQL_PASSWORD,
-    host: process.env.POSTGRESQL_HOSTNAME,
-    port: Number(process.env.POSTGRESQL_PORT),
-    database: process.env.POSTGRESQL_DATABASE,
+    user: user,
+    password: password,
+    host: host,
+    port: port,
+    database: database,
 });
 function connect() {
     return __awaiter(this, void 0, void 0, function* () {

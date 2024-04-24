@@ -69,15 +69,6 @@ function authServiceRegister(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { password } = req.body;
-            // const emailQuery = isEmailUnique();
-            // const insertWithEx = insertWithExist("users");
-            // const emailControl = await client.query(await emailQuery, [email]);
-            // if ((await emailControl.rowCount) >= 1) {
-            //   return new CustomResponse({
-            //     data: email,
-            //     message: "Email is already correct",
-            //   }).error_400(res);
-            // } else {
             const cryptPass = bcrypt.hashSync(password, 1);
             const userModel = yield (0, authMapper_1.registerRequestToUserModel)(req);
             userModel.password = cryptPass;
@@ -90,7 +81,6 @@ function authServiceRegister(req, res) {
             else {
                 return new responses_1.default({ message: "Not Created Account" }).error_400(res);
             }
-            // }
         }
         catch (error) {
             return new responses_1.default({ message: "Account Creating Error" }).error_400(res);
