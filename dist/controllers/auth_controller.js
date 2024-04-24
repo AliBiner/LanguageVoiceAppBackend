@@ -49,7 +49,7 @@ function me(request, response) {
 exports.me = me;
 function createWorker() {
     return new Promise((resolve, reject) => {
-        const worker = new worker_threads_1.Worker("../../../../../../../home/ali/Desktop/TsProject/src/threads/meWorker.js");
+        const worker = new worker_threads_1.Worker("../threads/meWorker.js");
         worker.postMessage("Hello, World!!");
         worker.on("message", (code) => {
             resolve(code);
