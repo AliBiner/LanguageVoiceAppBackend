@@ -81,6 +81,7 @@ function authServiceRegister(req, res) {
             else {
                 return new responses_1.default({ message: "Not Created Account" }).error_400(res);
             }
+            // }
         }
         catch (error) {
             return new responses_1.default({ message: "Account Creating Error" }).error_400(res);

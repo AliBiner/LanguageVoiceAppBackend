@@ -6,6 +6,9 @@ import {
 } from "../services/auth_service";
 import CustomResponse from "../utils/responses";
 import client from "../db/postgreSqlConnection";
+import { isMainThread, Worker } from "worker_threads";
+import { resolve } from "path";
+import { rejects } from "assert";
 
 export async function login(
   request: Request,
@@ -25,10 +28,33 @@ export async function register(
 
 export async function me(request: Request, response: Response) {
   try {
-    return new CustomResponse({}).success(response);
+    if (isMainThread) {
+      // const workerPromises = [];
+      // workerPromises.push(createWorker());
+
+      const pass = await Promise.resolve(createWorker());
+      return new CustomResponse({ message: pass }).success(response);
+    }
   } catch (err) {
+    console.log(err);
     return new CustomResponse({ message: err }).error_500(response);
   }
+}
+function createWorker() {
+  return new Promise<string>((resolve, reject) => {
+    const worker = new Worker(
+      "../../../../../../home/ali/Desktop/TsProject/src/controllers/meWorker.js"
+    );
+
+    worker.postMessage("Hello, World!!");
+
+    worker.on("message", (code) => {
+      resolve(code);
+    });
+    worker.on("error", (code) => {
+      reject(code);
+    });
+  });
 }
 
 export async function emailExistController(

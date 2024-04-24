@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.emailExistController = exports.me = exports.register = exports.login = void 0;
 const auth_service_1 = require("../services/auth_service");
 const responses_1 = __importDefault(require("../utils/responses"));
+const worker_threads_1 = require("worker_threads");
 function login(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         const result = (0, auth_service_1.authServiceLogin)(request, response);
@@ -32,14 +33,32 @@ exports.register = register;
 function me(request, response) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            return new responses_1.default({}).success(response);
+            if (worker_threads_1.isMainThread) {
+                // const workerPromises = [];
+                // workerPromises.push(createWorker());
+                const pass = yield Promise.resolve(createWorker());
+                return new responses_1.default({ message: pass }).success(response);
+            }
         }
         catch (err) {
+            console.log(err);
             return new responses_1.default({ message: err }).error_500(response);
         }
     });
 }
 exports.me = me;
+function createWorker() {
+    return new Promise((resolve, reject) => {
+        const worker = new worker_threads_1.Worker("../../../../../../home/ali/Desktop/TsProject/src/controllers/meWorker.js");
+        worker.postMessage("Hello, World!!");
+        worker.on("message", (code) => {
+            resolve(code);
+        });
+        worker.on("error", (code) => {
+            reject(code);
+        });
+    });
+}
 function emailExistController(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const result = yield (0, auth_service_1.emailExistService)(req, res);

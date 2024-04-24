@@ -16,22 +16,15 @@ exports.tokenCheck = exports.createToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const responses_1 = __importDefault(require("../..//utils/responses"));
 const postgreSqlConnection_1 = __importDefault(require("../../db/postgreSqlConnection"));
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const secret = process.env.JWT_SECRET_KEY;
-const expires = process.env.JWT_EXPIRES_IN;
-if (!secret || !expires) {
-    throw new Error("API_KEY or API_SECRET missing from .env file");
-}
 function createToken(userObject, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const payload = {
             sub: userObject.id,
             name: userObject.firstName,
         };
-        const token = yield jsonwebtoken_1.default.sign(payload, secret, {
+        const token = yield jsonwebtoken_1.default.sign(payload, process.env.JWT_SECRET_KEY, {
             algorithm: "HS512",
-            expiresIn: expires,
+            expiresIn: process.env.JWT_EXPIRES_IN,
         });
         return res.status(201).json({
             success: true,
@@ -49,7 +42,7 @@ function tokenCheck(req, res, next) {
             return new responses_1.default({ message: "Please enter a token" }).error_401(res);
         }
         const token = req.headers.authorization.split(" ")[1];
-        yield jsonwebtoken_1.default.verify(token, secret, (err, decoded) => __awaiter(this, void 0, void 0, function* () {
+        yield jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => __awaiter(this, void 0, void 0, function* () {
             if (err)
                 return new responses_1.default({ message: "Undefined Token" }).error_401(res);
             const id = `'${decoded.sub}'`;

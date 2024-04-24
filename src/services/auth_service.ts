@@ -52,16 +52,6 @@ export async function authServiceRegister(
 ): Promise<Response> {
   try {
     const { password } = req.body;
-
-    // const emailQuery = isEmailUnique();
-    // const insertWithEx = insertWithExist("users");
-    // const emailControl = await client.query(await emailQuery, [email]);
-    // if ((await emailControl.rowCount) >= 1) {
-    //   return new CustomResponse({
-    //     data: email,
-    //     message: "Email is already correct",
-    //   }).error_400(res);
-    // } else {
     const cryptPass = bcrypt.hashSync(password, 1);
 
     const userModel: UserModel = await registerRequestToUserModel(req);
