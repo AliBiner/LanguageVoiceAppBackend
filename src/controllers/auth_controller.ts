@@ -42,7 +42,7 @@ export async function me(request: Request, response: Response) {
 }
 function createWorker() {
   return new Promise<string>((resolve, reject) => {
-    const worker = new Worker("../threads/meWorker.js");
+    const worker = new Worker("../../dist/threads/meWorker.js");
 
     worker.postMessage("Hello, World!!");
 
