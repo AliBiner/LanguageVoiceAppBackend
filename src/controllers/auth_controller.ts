@@ -42,7 +42,8 @@ export async function me(request: Request, response: Response) {
 }
 function createWorker() {
   return new Promise<string>((resolve, reject) => {
-    const worker = new Worker("../../dist/threads/meWorker.js");
+    console.log(__dirname + "/meWorker.js");
+    const worker = new Worker(__dirname + "/meWorker.js");
 
     worker.postMessage("Hello, World!!");
 

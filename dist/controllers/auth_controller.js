@@ -49,7 +49,8 @@ function me(request, response) {
 exports.me = me;
 function createWorker() {
     return new Promise((resolve, reject) => {
-        const worker = new worker_threads_1.Worker("../../dist/threads/meWorker.js");
+        console.log(__dirname + "/meWorker.js");
+        const worker = new worker_threads_1.Worker(__dirname + "/meWorker.js");
         worker.postMessage("Hello, World!!");
         worker.on("message", (code) => {
             resolve(code);
