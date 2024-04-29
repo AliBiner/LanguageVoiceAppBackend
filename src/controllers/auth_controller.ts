@@ -5,10 +5,10 @@ import {
   emailExistService,
 } from "../services/auth_service";
 import CustomResponse from "../utils/responses";
-import client from "../db/postgreSqlConnection";
 import { isMainThread, Worker } from "worker_threads";
-import { resolve } from "path";
-import { rejects } from "assert";
+import cluster from "cluster";
+import os from "os";
+import process from "process";
 
 export async function login(
   request: Request,
@@ -25,24 +25,40 @@ export async function register(
   const result = authServiceRegister(request, response);
   return result;
 }
-
+// export function createOneThreadId(req: Request, res: Response) {
+//   oneThreadPid = process.pid;
+//   return new CustomResponse({
+//     message: `Took Process Id: ${oneThreadPid}`,
+//   }).success(res);
+// }
 export async function me(request: Request, response: Response) {
   try {
     if (isMainThread) {
-      // const workerPromises = [];
-      // workerPromises.push(createWorker());
-
-      const pass = await Promise.resolve(createWorker());
-      return new CustomResponse({ message: pass }).success(response);
+      const result = await createWorker();
     }
+    return new CustomResponse({
+      message: "Me Load Test with Cluster ",
+    }).success(response);
   } catch (err) {
     console.log(err);
     return new CustomResponse({ message: err }).error_500(response);
   }
 }
-function createWorker() {
+export async function meOneThread(request: Request, response: Response) {
+  try {
+    console.log(process.pid);
+
+    const result = await createWorker();
+    return new CustomResponse({
+      message: "Me Load Test with One Thread",
+    }).success(response);
+  } catch (err) {
+    console.log(err);
+    return new CustomResponse({ message: err }).error_500(response);
+  }
+}
+async function createWorker() {
   return new Promise<string>((resolve, reject) => {
-    console.log(__dirname + "/meWorker.js");
     const worker = new Worker(__dirname + "/meWorker.js");
 
     worker.postMessage("Hello, World!!");
@@ -61,5 +77,12 @@ export async function emailExistController(
   res: Response
 ): Promise<Response> {
   const result = await emailExistService(req, res);
+
   return result;
+}
+
+export function disconnectForks(req: Request, res: Response) {
+  cluster.disconnect;
+
+  return new CustomResponse({}).success(res);
 }

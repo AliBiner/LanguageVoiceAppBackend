@@ -4,12 +4,13 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "start": "npm run copy && nodemon src/app.ts",
-    "copy": "mkdir -p dist/threads && cp src/threads/* dist/threads/",
+    "start": " nodemon src/app.ts",
+    "copy": "mkdir -p dist/threads && cp src/**/*.js dist",
     "build": "rimraf dist && tsc",
     "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "analyzer": "webpack --mode=production"
   },
   "pre-commit": [
     "ts.check",
@@ -22,6 +23,7 @@
   "dependencies": {
     "@netlify/functions": "^2.6.0",
     "@types/node": "^20.12.7",
+    "@types/workerpool": "^6.4.7",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv-vault": "^1.26.1",
@@ -29,6 +31,7 @@
     "express-async-errors": "^3.1.1",
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
+    "loadtest": "^8.0.9",
     "mongoose": "^8.1.3",
     "netlify-cli": "^17.21.2",
     "nodemon": "^3.1.0",
@@ -50,6 +53,10 @@
     "@types/pg": "^8.11.5",
     "@types/uuid": "^9.0.8",
     "tslint": "^6.1.3",
-    "typescript": "^4.9.5"
+    "typescript": "^4.9.5",
+    "webpack": "^5.91.0",
+    "webpack-bundle-analyzer": "^4.10.2",
+    "webpack-cli": "^5.1.4",
+    "workerpool": "^9.1.1"
   }
 }

@@ -2,6 +2,7 @@ import express, { Router } from "express";
 const authRouter: Router = express.Router();
 import AuthValidation from "../middlewares/validations/auth_validation";
 import {
+  disconnectForks,
   emailExistController,
   login,
   me,
@@ -17,4 +18,6 @@ authRouter.post(
   AuthValidation.email_exist,
   emailExistController
 );
+authRouter.get("/me-one-thread", tokenCheck, me);
+authRouter.get("/disconnect-forks", disconnectForks);
 export default authRouter;
