@@ -34,7 +34,6 @@ export async function register(
 export async function me(request: Request, response: Response) {
   try {
     if (isMainThread) {
-      const result = await createWorker();
     }
     return new CustomResponse({
       message: "Me Load Test with Cluster ",

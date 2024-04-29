@@ -28,7 +28,6 @@ exports.register = register;
 async function me(request, response) {
     try {
         if (worker_threads_1.isMainThread) {
-            const result = await createWorker();
         }
         return new responses_1.default({
             message: "Me Load Test with Cluster ",

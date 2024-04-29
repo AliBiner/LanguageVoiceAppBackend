@@ -59,7 +59,7 @@ The logics in this request:<br>
 <h1>Single Thread Process on Node.js</h1>
 The more requests, the longer the response time will be due to the queue. Cluster is used as a solution to this. Cluster will create as many node instances as the number of threads we specify. When tested with Loadtest, it was seen that it provides significant load balancing.
 
-<h3>Single Thread Performance:<br></h3>
+<h3>Single Thread Performance(Local Server + Cloud Db Server):<br></h3>
 <dl>
   <dt>Loadtest Command:</dt>
   <dd style="color:red">Please Send Login Request For Token</dd>
@@ -95,7 +95,7 @@ Percentage of requests served within a certain time<br>
 <h1>Multi Thread with Cluster on Node.js</h1>
 <p>I used only 5 thread because my postgresql db server support 5 concurrent connections </p>
 
-<h3>Multi Thread Performance:<br></h3>
+<h3>Multi Thread Performance(Local Server + Cloud Db Server):<br></h3>
 <dl>
   <dt>Loadtest Command:</dt>
   <dd style="color:red">Please Send Login Request For Token</dd>
