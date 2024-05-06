@@ -22,15 +22,23 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^20.12.7",
+    "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
+    "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "dotenv-vault": "^1.26.1",
     "express": "^4.19.2",
     "express-async-errors": "^3.1.1",
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^3.3.2",
     "nodemon": "^3.1.0",
     "pg": "^8.11.5",
+    "pre-commit": "^1.2.2",
+    "puppeteer": "^22.7.1",
+    "puppeteer-core": "^22.7.1",
+    "request": "^2.88.2",
+    "selenium-webdriver": "^4.20.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
