@@ -1,14 +1,13 @@
 import express, { Router } from "express";
-const authRouter: Router = express.Router();
 import AuthValidation from "../middlewares/validations/auth_validation";
 import {
-  disconnectForks,
   emailExistController,
   login,
   me,
   register,
 } from "../controllers/auth_controller";
 import { tokenCheck } from "../middlewares/token/auth";
+const authRouter: Router = express.Router();
 
 authRouter.post("/login", AuthValidation.login, login);
 authRouter.post("/register", AuthValidation.register, register);
@@ -19,5 +18,4 @@ authRouter.post(
   emailExistController
 );
 authRouter.get("/me-one-thread", tokenCheck, me);
-authRouter.get("/disconnect-forks", disconnectForks);
 export default authRouter;

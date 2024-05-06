@@ -1,4 +1,4 @@
-import userModelDatabaseColumnNames from "../../models/user_postgre";
+import { userModelDatabaseColumnNames } from "../../models/user_postgre";
 
 async function isEmailUnique() {
   const query =

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const userModelDatabaseColumnNames = {
+exports.userModelDatabaseColumnNames = void 0;
+exports.userModelDatabaseColumnNames = {
     tableName: "users",
     id: "user_id",
     createdDate: "created_date",
@@ -12,5 +13,4 @@ const userModelDatabaseColumnNames = {
     middleName: "middle_name",
     updatedDate: "updated_date",
 };
-exports.default = userModelDatabaseColumnNames;
 //# sourceMappingURL=user_postgre.js.map

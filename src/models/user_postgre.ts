@@ -23,7 +23,7 @@ interface UserModelDatabaseColumnNames {
   deletedDate: string;
 }
 
-const userModelDatabaseColumnNames: UserModelDatabaseColumnNames = {
+export const userModelDatabaseColumnNames: UserModelDatabaseColumnNames = {
   tableName: "users",
   id: "user_id",
   createdDate: "created_date",
@@ -35,5 +35,3 @@ const userModelDatabaseColumnNames: UserModelDatabaseColumnNames = {
   middleName: "middle_name",
   updatedDate: "updated_date",
 };
-
-export default userModelDatabaseColumnNames;

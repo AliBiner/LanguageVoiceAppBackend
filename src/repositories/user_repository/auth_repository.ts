@@ -1,14 +1,16 @@
-import insertPostgreSql from "../../sql_queries/postgresql_queries/insert";
 import client from "../../db/postgreSqlConnection";
-import userModelDatabaseColumnNames, {
-  UserModel,
-} from "../../models/user_postgre";
-import { v4 as uuid4 } from "uuid";
+import { UserModel } from "../../models/user_postgre";
 import { QueryResultRow } from "pg";
-import bcrypt from "bcrypt";
-import { insertWithExist } from "../../sql_queries/postgresql_queries/insertWithExist";
 
 export async function createUser(user: UserModel): Promise<number> {
+  //import
+  const insertPostgreSql = (
+    await import("../../sql_queries/postgresql_queries/insert")
+  ).default;
+  const userModelDatabaseColumnNames = (
+    await import("../../models/user_postgre")
+  ).userModelDatabaseColumnNames;
+  const uuid4 = (await import("uuid")).v4;
   const insert = insertPostgreSql(userModelDatabaseColumnNames.tableName, [
     userModelDatabaseColumnNames.id,
     userModelDatabaseColumnNames.firstName,
@@ -36,12 +38,11 @@ export async function loginUser(
   values: string[],
   password: string
 ): Promise<QueryResultRow | false> {
+  //import
+  const bcrypt = (await import("bcrypt")).compare;
   const check = await client.query(query, values);
   if (check.rowCount >= 1) {
-    const checkPass = await bcrypt.compare(
-      password,
-      check.rows[0].account_password
-    );
+    const checkPass = await bcrypt(password, check.rows[0].account_password);
     if (checkPass === false) {
       return false;
     }

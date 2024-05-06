@@ -5,20 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require("express-async-errors");
 const express_1 = __importDefault(require("express"));
-const port = process.env.PORT || 8080 || 8081; // default port to listen
 const index_1 = __importDefault(require("./routers/index"));
 const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
 require("./db/dbConnection");
 const errorhandler_1 = __importDefault(require("./middlewares/errorhandler"));
 const cors_1 = __importDefault(require("cors"));
 const postgreSqlConnection_1 = require("./db/postgreSqlConnection");
 const cluster_1 = __importDefault(require("cluster"));
 const os_1 = __importDefault(require("os"));
+const port = process.env.PORT || 8080 || 8081; // default port to listen
+dotenv_1.default.config();
 const numCPUs = os_1.default.availableParallelism();
 if (cluster_1.default.isPrimary) {
-    console.log(`Number of CPUs is ${numCPUs}`);
-    console.log(`Primary ${process.pid} is running`);
     // Fork workers.
     for (let i = 0; i < 5; i++) {
         cluster_1.default.fork();
@@ -30,6 +28,7 @@ if (cluster_1.default.isPrimary) {
     });
 }
 else {
+    console.log(`Create Instance of Node.js`);
     const app = (0, express_1.default)();
     // Middleware
     app.use(express_1.default.json());

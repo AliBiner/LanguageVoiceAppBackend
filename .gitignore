@@ -25,6 +25,8 @@ lerna-debug.log*
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
+webpack.config.js
+
 # Runtime data
 pids
 *.pid

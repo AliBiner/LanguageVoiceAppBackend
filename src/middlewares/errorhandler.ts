@@ -1,5 +1,5 @@
 import APIError from "../utils/errors";
-import express, { Request, Response } from "express";
+import { Request, Response } from "express";
 
 const errorHandlerMiddleware = (
   err: Error,

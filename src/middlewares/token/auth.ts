@@ -1,10 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import CustomResponse from "../..//utils/responses";
-import User from "../../models/user_model";
 import { UserModel } from "../../models/user_postgre";
 import client from "../../db/postgreSqlConnection";
-import { deprecate } from "util";
 
 export async function createToken(
   userObject: UserModel,
